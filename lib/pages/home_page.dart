@@ -12,13 +12,13 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Catelog App"),
       ),
-      drawer: Drawer(),
       body: Center(
           child: Container(
               child: Text(
         "Welcome to $days days of flutter! $name",
         style: const TextStyle(fontSize: 20),
       ))),
+      drawer: Drawer(),
     );
   }
 }
