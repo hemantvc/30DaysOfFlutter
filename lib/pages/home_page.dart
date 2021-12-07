@@ -44,10 +44,13 @@ class _HomePageState extends State<HomePage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: (CatelogModel.items != null && CatelogModel.items.isNotEmpty)
-            ? ListView.builder(
+            ? GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                itemBuilder: (item,context){
+                  return GridTile(child: intem.)
+                          
+                },
                 itemCount: CatelogModel.items.length,
-                itemBuilder: (context, index) =>
-                    ItemWidget(item: CatelogModel.items[index]),
               )
             : Center(
                 child: CircularProgressIndicator(),
