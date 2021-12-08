@@ -1,9 +1,11 @@
+import 'dart:convert';
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
-import 'dart:convert';
+import 'package:flutter_day_1/widgets/home_widgets/catalog_header.dart';
+import 'package:flutter_day_1/widgets/home_widgets/catalog_list.dart';
+import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter_day_1/models/catelog.dart';
-import 'package:flutter_day_1/widgets/item_widget.dart';
-import 'package:flutter_day_1/widgets/drawer.dart';
+import 'package:flutter_day_1/widgets/themes.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatefulWidget {
@@ -38,54 +40,22 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Catelog App"),
+      backgroundColor: MyTheme.creamColor,
+      body: SafeArea(
+        child: Container(
+          padding: Vx.m32,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CatalogHeader(),
+              if (CatelogModel.items != null && CatelogModel.items.isNotEmpty)
+                CatalogList().py16().expand()
+              else
+                CircularProgressIndicator().centered().expand()
+            ],
+          ),
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: (CatelogModel.items != null && CatelogModel.items.isNotEmpty)
-            ? GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
-                itemBuilder: (context, index) {
-                  final item = CatelogModel.items[index];
-                  return Card(
-                      clipBehavior: Clip.antiAlias,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: GridTile(
-                        header: Container(
-                          child: Text(
-                            item.name,
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: Colors.deepPurple,
-                          ),
-                        ),
-                        child: Image.network(
-                          item.image,
-                        ),
-                        footer: Container(
-                          child: Text(
-                            item.price.toString(),
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                          ),
-                        ),
-                      ));
-                },
-                itemCount: CatelogModel.items.length,
-              )
-            : Center(
-                child: CircularProgressIndicator(),
-              ),
-      ),
-      drawer: MyDrawer(),
     );
   }
 }
